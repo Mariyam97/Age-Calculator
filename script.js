@@ -17,7 +17,7 @@ function calculateAge() {
   let days = currentDate.getDate() - selectedDate.getDate();
 
   if (days < 0) {
-    let lastDayOfLastMonth = new Date(
+    const lastDayOfLastMonth = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth(),
       0
@@ -26,9 +26,13 @@ function calculateAge() {
     months--;
   }
 
-  if (months < 0) {
+  if (months < 0 || (months === 0 && days < 0)) {
     years--;
-    months += 12;
+    if (currentDate.getDate() < selectedDate.getDate()) {
+      months += 11;
+    } else {
+      months += 12;
+    }
   }
 
   result.innerHTML = `You are ${years} years, ${months} months, and ${days} days old`;
