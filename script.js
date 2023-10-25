@@ -16,17 +16,19 @@ function calculateAge() {
   let months = currentDate.getMonth() - selectedDate.getMonth();
   let days = currentDate.getDate() - selectedDate.getDate();
 
-  if (months < 0 || (months === 0 && days < 0)) {
+  if (days < 0) {
+    let lastDayOfLastMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      0
+    ).getDate();
+    days += lastDayOfLastMonth;
+    months--;
+  }
+
+  if (months < 0) {
     years--;
-    if (currentDate.getDate() < selectedDate.getDate()) {
-      let lastDayOfLastMonth = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        0
-      ).getDate();
-      days += lastDayOfLastMonth;
-      months--;
-    }
+    months += 12;
   }
 
   result.innerHTML = `You are ${years} years, ${months} months, and ${days} days old`;
