@@ -1,7 +1,6 @@
 let userInput = document.getElementById("date");
 let result = document.getElementById("result");
 
-// Set the maximum date to today
 userInput.max = new Date().toISOString().split("T")[0];
 
 function calculateAge() {
@@ -19,13 +18,15 @@ function calculateAge() {
 
   if (months < 0 || (months === 0 && days < 0)) {
     years--;
-    months += 12;
-  }
-
-  if (days < 0) {
-    const lastDayOfLastMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
-    days += lastDayOfLastMonth;
-    months--;
+    if (currentDate.getDate() < selectedDate.getDate()) {
+      let lastDayOfLastMonth = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        0
+      ).getDate();
+      days += lastDayOfLastMonth;
+      months--;
+    }
   }
 
   result.innerHTML = `You are ${years} years, ${months} months, and ${days} days old`;
